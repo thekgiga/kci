@@ -128,6 +128,7 @@ public class AccountPageController extends AbstractSearchPageController
 	private static final String UPDATE_PASSWORD_CMS_PAGE = "updatePassword";
 	private static final String UPDATE_PROFILE_CMS_PAGE = "update-profile";
 	private static final String UPDATE_EMAIL_CMS_PAGE = "update-email";
+	private static final String UPDATE_CONFIRMATION_EMAIL_CMS_PAGE = "update-confirmation-email";
 	private static final String ADDRESS_BOOK_CMS_PAGE = "address-book";
 	private static final String ADD_EDIT_ADDRESS_CMS_PAGE = "add-edit-address";
 	private static final String PAYMENT_DETAILS_CMS_PAGE = "payment-details";
@@ -448,6 +449,72 @@ public class AccountPageController extends AbstractSearchPageController
 
 		return returnAction;
 	}
+
+    @RequestMapping(value = "/update-confirmation-emails", method = RequestMethod.GET)
+    @RequireHardLogIn
+    public String editConfirmationEmails(final Model model) throws CMSItemNotFoundException
+    {
+        final CustomerData customerData = customerFacade.getCurrentCustomer();
+        final UpdateEmailForm updateEmailForm = new UpdateEmailForm();
+
+        updateEmailForm.setEmail(customerData.getDisplayUid());
+
+        model.addAttribute("updateEmailForm", updateEmailForm);
+
+        storeCmsPageInModel(model, getContentPageForLabelOrId(UPDATE_CONFIRMATION_EMAIL_CMS_PAGE));
+        setUpMetaDataForContentPage(model, getContentPageForLabelOrId(UPDATE_CONFIRMATION_EMAIL_CMS_PAGE));
+        model.addAttribute(BREADCRUMBS_ATTR, accountBreadcrumbBuilder.getBreadcrumbs(TEXT_ACCOUNT_PROFILE));
+        model.addAttribute(ThirdPartyConstants.SeoRobots.META_ROBOTS, ThirdPartyConstants.SeoRobots.NOINDEX_NOFOLLOW);
+        return getViewForPage(model);
+    }
+
+    @RequestMapping(value = "/update-confirmation-emails", method = RequestMethod.POST)
+    @RequireHardLogIn
+    public String updateConfirmationEmails(final UpdateEmailForm updateEmailForm, final BindingResult bindingResult, final Model model,
+                              final RedirectAttributes redirectAttributes) throws CMSItemNotFoundException
+    {
+        getEmailValidator().validate(updateEmailForm, bindingResult);
+        String returnAction = REDIRECT_TO_UPDATE_EMAIL_PAGE;
+
+        if (!bindingResult.hasErrors() && !updateEmailForm.getEmail().equals(updateEmailForm.getChkEmail()))
+        {
+            bindingResult.rejectValue("chkEmail", "validation.checkEmail.equals", new Object[] {}, "validation.checkEmail.equals");
+        }
+
+        if (bindingResult.hasErrors())
+        {
+            returnAction = setErrorMessagesAndCMSPage(model, UPDATE_CONFIRMATION_EMAIL_CMS_PAGE);
+        }
+        else
+        {
+            try
+            {
+                customerFacade.changeUid(updateEmailForm.getEmail(), updateEmailForm.getPassword());
+                GlobalMessages.addFlashMessage(redirectAttributes, GlobalMessages.CONF_MESSAGES_HOLDER,
+                        "text.account.profile.confirmationUpdated", null);
+
+                // Replace the spring security authentication with the new UID
+                final String newUid = customerFacade.getCurrentCustomer().getUid().toLowerCase();
+                final Authentication oldAuthentication = SecurityContextHolder.getContext().getAuthentication();
+                final UsernamePasswordAuthenticationToken newAuthentication = new UsernamePasswordAuthenticationToken(newUid, null,
+                        oldAuthentication.getAuthorities());
+                newAuthentication.setDetails(oldAuthentication.getDetails());
+                SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+            }
+            catch (final DuplicateUidException e)
+            {
+                bindingResult.rejectValue("email", "profile.email.unique");
+                returnAction = setErrorMessagesAndCMSPage(model, UPDATE_CONFIRMATION_EMAIL_CMS_PAGE);
+            }
+            catch (final PasswordMismatchException passwordMismatchException)
+            {
+                bindingResult.rejectValue("password", PROFILE_CURRENT_PASSWORD_INVALID);
+                returnAction = setErrorMessagesAndCMSPage(model, UPDATE_CONFIRMATION_EMAIL_CMS_PAGE);
+            }
+        }
+
+        return returnAction;
+    }
 
 	protected String setErrorMessagesAndCMSPage(final Model model, final String cmsPageLabelOrId) throws CMSItemNotFoundException
 	{

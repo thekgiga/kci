@@ -1,0 +1,43 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2017 SAP SE or an SAP affiliate company.  All rights reserved.
+#
+# This software is the confidential and proprietary information of SAP
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with SAP.
+# -----------------------------------------------------------------------
+# ImpEx for Importing CMS Content
+# Macros / Replacement Parameter definitions
+$contentCatalog=electronicsContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Online])[default=$contentCatalog:Online]
+$lang=en
+
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;linkName;url;&linkRef;target(code)[default='sameWindow'];restrictions
+;;EmailPreferenceLink;EmailPreferenceLink;Confirmation emails;/my-account/update-confirmation-emails;EmailPreferenceLink;
+
+INSERT_UPDATE CMSUserGroupRestriction; $contentCV[unique = true]; uid[unique = true]; name; userGroups(uid); includeSubgroups; components(&linkRef)
+; ; OrderEmailsUserGroupRestriction ; Order Emails User Group Restriction ; orderemails ; true ; EmailPreferenceLink
+
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];title;name;parent(uid, $contentCV);links(&linkRef);&nodeRef
+;EmailPreferenceNavNode;;Confirmation emails;EmailPreferenceNavNode;MyAccountNavNode;;EmailPreferenceNavNode
+
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+;EmailPreferenceNavNodeEntry;;EmailPreferenceNavNodeEntry;EmailPreferenceNavNode;EmailPreferenceLink;
+
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
+;;update-confirmation-email;Update Confirmatin Email Page;AccountPageTemplate;update-confirmation-email
+
+###### Account Update Email Page Start ######
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+;;SideContentSlot-update-confirmation-email;Side Content Slot for Update Email;true;;;;
+;;BodyContentSlot-update-confirmation-email;Body Content Slot for Update Email;true;UpdateConfirmationEmailsComponent;;;
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='update-confirmation-email'];contentSlot(uid,$contentCV)[unique=true];;;
+;;SideContent-update-confirmation-email;SideContent;;SideContentSlot-update-email;;;
+;;BodyContent-update-confirmation-email;BodyContent;;BodyContentSlot-update-email;;;
+
+INSERT_UPDATE JspIncludeComponent;$contentCV[unique=true];uid[unique=true];name;page;actions(uid,$contentCV);&componentRef
+;;UpdateConfirmationEmailsComponent;Update Confirmation Emails Component;accountProfileConfirmationEmailEditPage.jsp;;UpdateConfirmationEmailsComponent
+###### Account Update Email Page Start ######
