@@ -117,29 +117,21 @@
                       jaloclass="org.kloeckner.core.jalo.KciEmailAddress">
                 <deployment table="KciEmailAddr" typecode="11111"/>
                 <attributes>
-                    <attribute qualifier="email" type="java.lang.String"/>
+                    <attribute qualifier="email" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
                 </attributes>
             </itemtype>
 
-            <itemtype code="Customer" generate="false" autocreate="false">
+            <itemtype code="User" generate="false" autocreate="false">
                 <attributes>
-                    <attribute qualifier="emailAddressesToBeNotified" type="KciEmailsList">
+                    <attribute qualifier="orderConfirmationEmailAddresses" type="KciEmailsList">
                         <modifiers read="true" write="true" search="true"/>
                         <persistence type="property"/>
                     </attribute>
                 </attributes>
             </itemtype>
-
-            <itemtype code="KciEmailsComponent" extends="SimpleCMSComponent"
-                      jaloclass="com.bosch.hybris.ptb2b.core.jalo.KciEmailsEditComponent">
-                <description>Emails edit component</description>
-                <attributes>
-                    <attribute qualifier="emails" type="java.lang.String">
-                        <description>Field for storing emails - comma separated.</description>
-                        <persistence type="property"/>
-                    </attribute>
-                </attributes>
-            </itemtype>
+            
         </typegroup>
     </itemtypes>
 </items>

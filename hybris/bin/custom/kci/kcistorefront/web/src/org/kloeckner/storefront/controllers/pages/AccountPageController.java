@@ -37,11 +37,9 @@ import de.hybris.platform.commercefacades.order.CheckoutFacade;
 import de.hybris.platform.commercefacades.order.OrderFacade;
 import de.hybris.platform.commercefacades.order.data.CCPaymentInfoData;
 import de.hybris.platform.commercefacades.order.data.OrderData;
-import de.hybris.platform.commercefacades.order.data.OrderEntryData;
 import de.hybris.platform.commercefacades.order.data.OrderHistoryData;
 import de.hybris.platform.commercefacades.product.ProductFacade;
 import de.hybris.platform.commercefacades.product.ProductOption;
-import de.hybris.platform.commercefacades.product.data.ProductData;
 import de.hybris.platform.commercefacades.user.UserFacade;
 import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CountryData;
@@ -55,6 +53,7 @@ import de.hybris.platform.commerceservices.search.pagedata.SearchPageData;
 import de.hybris.platform.commerceservices.util.ResponsiveUtils;
 import de.hybris.platform.servicelayer.exceptions.UnknownIdentifierException;
 import de.hybris.platform.util.Config;
+import org.kloeckner.facades.customers.KciCustomerFacade;
 import org.kloeckner.storefront.controllers.ControllerConstants;
 
 import java.util.Arrays;
@@ -62,7 +61,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -70,6 +69,7 @@ import javax.annotation.Resource;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.kloeckner.storefront.forms.UpdateConfirmationEmailForm;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -110,6 +110,7 @@ public class AccountPageController extends AbstractSearchPageController
 	private static final String REDIRECT_TO_PAYMENT_INFO_PAGE = REDIRECT_PREFIX + "/my-account/payment-details";
 	private static final String REDIRECT_TO_EDIT_ADDRESS_PAGE = REDIRECT_PREFIX + "/my-account/edit-address/";
 	private static final String REDIRECT_TO_UPDATE_EMAIL_PAGE = REDIRECT_PREFIX + "/my-account/update-email";
+	private static final String REDIRECT_TO_UPDATE_CONFIRMATION_EMAIL_PAGE = REDIRECT_PREFIX + "/my-account/update-confirmation-emails";
 	private static final String REDIRECT_TO_UPDATE_PROFILE = REDIRECT_PREFIX + "/my-account/update-profile";
 	private static final String REDIRECT_TO_PASSWORD_UPDATE_PAGE = REDIRECT_PREFIX + "/my-account/update-password";
 	private static final String REDIRECT_TO_ORDER_HISTORY_PAGE = REDIRECT_PREFIX + "/my-account/orders";
@@ -455,9 +456,9 @@ public class AccountPageController extends AbstractSearchPageController
     public String editConfirmationEmails(final Model model) throws CMSItemNotFoundException
     {
         final CustomerData customerData = customerFacade.getCurrentCustomer();
-        final UpdateEmailForm updateEmailForm = new UpdateEmailForm();
+        final UpdateConfirmationEmailForm updateEmailForm = new UpdateConfirmationEmailForm();
 
-        updateEmailForm.setEmail(customerData.getDisplayUid());
+        updateEmailForm.setEmails(Objects.isNull(customerData.getEmails()) ? StringUtils.EMPTY : customerData.getEmails());
 
         model.addAttribute("updateEmailForm", updateEmailForm);
 
@@ -470,48 +471,19 @@ public class AccountPageController extends AbstractSearchPageController
 
     @RequestMapping(value = "/update-confirmation-emails", method = RequestMethod.POST)
     @RequireHardLogIn
-    public String updateConfirmationEmails(final UpdateEmailForm updateEmailForm, final BindingResult bindingResult, final Model model,
-                              final RedirectAttributes redirectAttributes) throws CMSItemNotFoundException
-    {
-        getEmailValidator().validate(updateEmailForm, bindingResult);
-        String returnAction = REDIRECT_TO_UPDATE_EMAIL_PAGE;
+    public String updateConfirmationEmailForm(final UpdateConfirmationEmailForm updateConfirmationEmailForm, final BindingResult bindingResult, final Model model,
+                                              final RedirectAttributes redirectAttributes) throws CMSItemNotFoundException {
+        String returnAction = REDIRECT_TO_UPDATE_CONFIRMATION_EMAIL_PAGE;
 
-        if (!bindingResult.hasErrors() && !updateEmailForm.getEmail().equals(updateEmailForm.getChkEmail()))
-        {
-            bindingResult.rejectValue("chkEmail", "validation.checkEmail.equals", new Object[] {}, "validation.checkEmail.equals");
-        }
-
-        if (bindingResult.hasErrors())
-        {
+        try {
+            ((KciCustomerFacade) customerFacade).updateConfirmationEmails(updateConfirmationEmailForm.getEmails());
+            GlobalMessages.addFlashMessage(redirectAttributes, GlobalMessages.CONF_MESSAGES_HOLDER,
+                    "text.account.profile.confirmationUpdated", null);
+        } catch (final Exception exception) {
+            bindingResult.rejectValue("emails", PROFILE_CURRENT_PASSWORD_INVALID);
             returnAction = setErrorMessagesAndCMSPage(model, UPDATE_CONFIRMATION_EMAIL_CMS_PAGE);
         }
-        else
-        {
-            try
-            {
-                customerFacade.changeUid(updateEmailForm.getEmail(), updateEmailForm.getPassword());
-                GlobalMessages.addFlashMessage(redirectAttributes, GlobalMessages.CONF_MESSAGES_HOLDER,
-                        "text.account.profile.confirmationUpdated", null);
-
-                // Replace the spring security authentication with the new UID
-                final String newUid = customerFacade.getCurrentCustomer().getUid().toLowerCase();
-                final Authentication oldAuthentication = SecurityContextHolder.getContext().getAuthentication();
-                final UsernamePasswordAuthenticationToken newAuthentication = new UsernamePasswordAuthenticationToken(newUid, null,
-                        oldAuthentication.getAuthorities());
-                newAuthentication.setDetails(oldAuthentication.getDetails());
-                SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-            }
-            catch (final DuplicateUidException e)
-            {
-                bindingResult.rejectValue("email", "profile.email.unique");
-                returnAction = setErrorMessagesAndCMSPage(model, UPDATE_CONFIRMATION_EMAIL_CMS_PAGE);
-            }
-            catch (final PasswordMismatchException passwordMismatchException)
-            {
-                bindingResult.rejectValue("password", PROFILE_CURRENT_PASSWORD_INVALID);
-                returnAction = setErrorMessagesAndCMSPage(model, UPDATE_CONFIRMATION_EMAIL_CMS_PAGE);
-            }
-        }
+//        }
 
         return returnAction;
     }

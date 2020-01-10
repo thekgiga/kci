@@ -190,4 +190,14 @@
 	</bean>
 
 	<bean id="genderData" class="org.kloeckner.facades.product.data.GenderData" scope="prototype"/>
+
+    <alias name="kciCustomerFacade" alias="customerFacade"/>
+    <bean id="kciCustomerFacade" parent="defaultCustomerFacade" class="org.kloeckner.facades.customers.impl.KciCustomerFacadeImpl"/>
+
+    <bean id="KciCustomerPopulator" class="org.kloeckner.facades.populators.KciCustomerPopulator"/>
+    
+    <bean parent="modifyPopulatorList">
+        <property name="list" ref="customerConverter" />
+        <property name="add" ref="KciCustomerPopulator" />
+    </bean>
 </beans>

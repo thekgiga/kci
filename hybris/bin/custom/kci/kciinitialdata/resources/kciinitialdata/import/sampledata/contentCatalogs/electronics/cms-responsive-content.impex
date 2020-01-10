@@ -27,16 +27,16 @@ INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;n
 ;EmailPreferenceNavNodeEntry;;EmailPreferenceNavNodeEntry;EmailPreferenceNavNode;EmailPreferenceLink;
 
 INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
-;;update-confirmation-email;Update Confirmatin Email Page;AccountPageTemplate;update-confirmation-email
+;;update-confirmation-emails;Update Confirmatin Email Page;AccountPageTemplate;update-confirmation-emails
 
 ###### Account Update Email Page Start ######
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
-;;SideContentSlot-update-confirmation-email;Side Content Slot for Update Email;true;;;;
-;;BodyContentSlot-update-confirmation-email;Body Content Slot for Update Email;true;UpdateConfirmationEmailsComponent;;;
+;;SideContentSlot-update-confirmation-emails;Side Content Slot for Update Email;true;;;;
+;;BodyContentSlot-update-confirmation-emails;Body Content Slot for Update Email;true;UpdateConfirmationEmailsComponent;;;
 
-INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='update-confirmation-email'];contentSlot(uid,$contentCV)[unique=true];;;
-;;SideContent-update-confirmation-email;SideContent;;SideContentSlot-update-email;;;
-;;BodyContent-update-confirmation-email;BodyContent;;BodyContentSlot-update-email;;;
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='update-confirmation-emails'];contentSlot(uid,$contentCV)[unique=true];;;
+;;SideContent-update-confirmation-emails;SideContent;;SideContentSlot-update-email;;;
+;;BodyContent-update-confirmation-emails;BodyContent;;BodyContentSlot-update-email;;;
 
 INSERT_UPDATE JspIncludeComponent;$contentCV[unique=true];uid[unique=true];name;page;actions(uid,$contentCV);&componentRef
 ;;UpdateConfirmationEmailsComponent;Update Confirmation Emails Component;accountProfileConfirmationEmailEditPage.jsp;;UpdateConfirmationEmailsComponent

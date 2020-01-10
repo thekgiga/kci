@@ -96,16 +96,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			false
 		);
 	
-		createItemType(
-			"KciEmailsComponent",
-			"SimpleCMSComponent",
-			com.bosch.hybris.ptb2b.core.jalo.KciEmailsEditComponent.class,
-			null,
-			false,
-			null,
-			false
-		);
-	
 		createEnumerationType(
 			"SwatchColorEnum",
 			null
@@ -154,9 +144,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 				single_createattr_KciEmailAddress_email();
 			
-				single_createattr_Customer_emailAddressesToBeNotified();
-			
-				single_createattr_KciEmailsComponent_emails();
+				single_createattr_User_orderConfirmationEmailAddresses();
 			
 
 	}
@@ -250,26 +238,13 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 	public void single_createattr_KciEmailAddress_email() throws JaloBusinessException
 	{
 		
-				createJaloAttribute(
-					"KciEmailAddress", 
-					"email",  
-					"java.lang.String",
-					null,
-					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG
-				);
-			
-	}
-	
-	public void single_createattr_Customer_emailAddressesToBeNotified() throws JaloBusinessException
-	{
-		
 						Map sqlColumnDefinitions = null;
 					
 				createPropertyAttribute(
-					"Customer", 
-					"emailAddressesToBeNotified",  
+					"KciEmailAddress", 
+					"email",  
 					null,
-					"KciEmailsList",
+					"java.lang.String",
 					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
 					null,
 					sqlColumnDefinitions
@@ -277,16 +252,16 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 	}
 	
-	public void single_createattr_KciEmailsComponent_emails() throws JaloBusinessException
+	public void single_createattr_User_orderConfirmationEmailAddresses() throws JaloBusinessException
 	{
 		
 						Map sqlColumnDefinitions = null;
 					
 				createPropertyAttribute(
-					"KciEmailsComponent", 
-					"emails",  
+					"User", 
+					"orderConfirmationEmailAddresses",  
 					null,
-					"java.lang.String",
+					"KciEmailsList",
 					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
 					null,
 					sqlColumnDefinitions
@@ -406,28 +381,13 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				Map customPropsMap = new HashMap();
 				
 				changeMetaType(
-					"Customer",
+					"User",
 					null,
 					customPropsMap
 				);
 				}
 			
-			single_setAttributeProperties_Customer_emailAddressesToBeNotified();
-		
-				{
-				Map customPropsMap = new HashMap();
-				
-				setItemTypeProperties(
-					"KciEmailsComponent",
-					false,
-					true,
-					true,
-					null,
-					customPropsMap
-				);
-				}
-			
-			single_setAttributeProperties_KciEmailsComponent_emails();
+			single_setAttributeProperties_User_orderConfirmationEmailAddresses();
 		
 				setDefaultProperties(
 					"GenderList",
@@ -593,7 +553,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							);
 						}
 					
-						public void single_setAttributeProperties_Customer_emailAddressesToBeNotified() throws JaloBusinessException
+						public void single_setAttributeProperties_User_orderConfirmationEmailAddresses() throws JaloBusinessException
 						{
 							
 							
@@ -601,30 +561,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							Map customPropsMap = new HashMap();
 							
 							setAttributeProperties(
-								"Customer", 
-								"emailAddressesToBeNotified",
-								false, 
-								null,
-								null,
-								null,
-								true,
-								true,
-								null,
-								customPropsMap,
-								null
-							);
-						}
-					
-						public void single_setAttributeProperties_KciEmailsComponent_emails() throws JaloBusinessException
-						{
-							
-							
-							
-							Map customPropsMap = new HashMap();
-							
-							setAttributeProperties(
-								"KciEmailsComponent", 
-								"emails",
+								"User", 
+								"orderConfirmationEmailAddresses",
 								false, 
 								null,
 								null,

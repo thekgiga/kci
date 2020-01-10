@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at Jan 10, 2020 1:41:01 PM                     ---
+ * --- Generated at Jan 10, 2020 5:08:22 PM                     ---
  * ----------------------------------------------------------------
  */
 package org.kloeckner.core.constants;
@@ -21,14 +21,13 @@ public class GeneratedKciCoreConstants
 		public static final String APPARELSTYLEVARIANTPRODUCT = "ApparelStyleVariantProduct".intern();
 		public static final String ELECTRONICSCOLORVARIANTPRODUCT = "ElectronicsColorVariantProduct".intern();
 		public static final String KCIEMAILADDRESS = "KciEmailAddress".intern();
-		public static final String KCIEMAILSCOMPONENT = "KciEmailsComponent".intern();
 		public static final String SWATCHCOLORENUM = "SwatchColorEnum".intern();
 	}
 	public static class Attributes
 	{
-		public static class Customer
+		public static class User
 		{
-			public static final String EMAILADDRESSESTOBENOTIFIED = "emailAddressesToBeNotified".intern();
+			public static final String ORDERCONFIRMATIONEMAILADDRESSES = "orderConfirmationEmailAddresses".intern();
 		}
 	}
 	public static class Enumerations
