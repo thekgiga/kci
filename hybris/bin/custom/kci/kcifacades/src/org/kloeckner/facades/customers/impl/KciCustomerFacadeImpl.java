@@ -19,7 +19,7 @@ public class KciCustomerFacadeImpl extends DefaultCustomerFacade implements KciC
     public void updateConfirmationEmails(String confirmationEmails) {
         final UserModel currentUser = getCurrentUser();
         try {
-            currentUser.setOrderConfirmationEmailAddresses(getListOfKciEmailAddresses(confirmationEmails));
+            currentUser.setOrderConfirmationEmails(getListOfKciEmailAddresses(confirmationEmails));
             getModelService().saveAll();
             getModelService().refresh(currentUser);
         } catch (Exception e) {

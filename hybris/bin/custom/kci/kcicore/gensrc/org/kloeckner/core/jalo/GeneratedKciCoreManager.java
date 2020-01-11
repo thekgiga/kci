@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at Jan 10, 2020 5:08:22 PM                     ---
+ * --- Generated at Jan 11, 2020 2:11:07 AM                     ---
  * ----------------------------------------------------------------
  */
 package org.kloeckner.core.jalo;
@@ -12,10 +12,13 @@ import de.hybris.platform.jalo.JaloBusinessException;
 import de.hybris.platform.jalo.JaloSystemException;
 import de.hybris.platform.jalo.SessionContext;
 import de.hybris.platform.jalo.extension.Extension;
+import de.hybris.platform.jalo.link.Link;
 import de.hybris.platform.jalo.security.Principal;
 import de.hybris.platform.jalo.type.ComposedType;
 import de.hybris.platform.jalo.type.JaloGenericCreationException;
 import de.hybris.platform.jalo.user.User;
+import de.hybris.platform.util.Utilities;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -33,13 +36,15 @@ import org.kloeckner.core.jalo.KciEmailAddress;
 @SuppressWarnings({"deprecation","unused","cast","PMD"})
 public abstract class GeneratedKciCoreManager extends Extension
 {
+	/** Relation ordering override parameter constants for KciEmailAddress2UserRelation from ((kcicore))*/
+	protected static String KCIEMAILADDRESS2USERRELATION_SRC_ORDERED = "relation.KciEmailAddress2UserRelation.source.ordered";
+	protected static String KCIEMAILADDRESS2USERRELATION_TGT_ORDERED = "relation.KciEmailAddress2UserRelation.target.ordered";
+	/** Relation disable markmodifed parameter constants for KciEmailAddress2UserRelation from ((kcicore))*/
+	protected static String KCIEMAILADDRESS2USERRELATION_MARKMODIFIED = "relation.KciEmailAddress2UserRelation.markmodified";
 	protected static final Map<String, Map<String, AttributeMode>> DEFAULT_INITIAL_ATTRIBUTES;
 	static
 	{
 		final Map<String, Map<String, AttributeMode>> ttmp = new HashMap();
-		Map<String, AttributeMode> tmp = new HashMap<String, AttributeMode>();
-		tmp.put("orderConfirmationEmailAddresses", AttributeMode.INITIAL);
-		ttmp.put("de.hybris.platform.jalo.user.User", Collections.unmodifiableMap(tmp));
 		DEFAULT_INITIAL_ATTRIBUTES = ttmp;
 	}
 	@Override
@@ -191,40 +196,127 @@ public abstract class GeneratedKciCoreManager extends Extension
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>User.orderConfirmationEmailAddresses</code> attribute.
-	 * @return the orderConfirmationEmailAddresses
+	 * <i>Generated method</i> - Getter of the <code>User.orderConfirmationEmails</code> attribute.
+	 * @return the orderConfirmationEmails
 	 */
-	public List<KciEmailAddress> getOrderConfirmationEmailAddresses(final SessionContext ctx, final User item)
+	public Collection<KciEmailAddress> getOrderConfirmationEmails(final SessionContext ctx, final User item)
 	{
-		List<KciEmailAddress> coll = (List<KciEmailAddress>)item.getProperty( ctx, KciCoreConstants.Attributes.User.ORDERCONFIRMATIONEMAILADDRESSES);
-		return coll != null ? coll : Collections.EMPTY_LIST;
+		final List<KciEmailAddress> items = item.getLinkedItems( 
+			ctx,
+			false,
+			KciCoreConstants.Relations.KCIEMAILADDRESS2USERRELATION,
+			"KciEmailAddress",
+			null,
+			false,
+			false
+		);
+		return items;
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>User.orderConfirmationEmailAddresses</code> attribute.
-	 * @return the orderConfirmationEmailAddresses
+	 * <i>Generated method</i> - Getter of the <code>User.orderConfirmationEmails</code> attribute.
+	 * @return the orderConfirmationEmails
 	 */
-	public List<KciEmailAddress> getOrderConfirmationEmailAddresses(final User item)
+	public Collection<KciEmailAddress> getOrderConfirmationEmails(final User item)
 	{
-		return getOrderConfirmationEmailAddresses( getSession().getSessionContext(), item );
+		return getOrderConfirmationEmails( getSession().getSessionContext(), item );
+	}
+	
+	public long getOrderConfirmationEmailsCount(final SessionContext ctx, final User item)
+	{
+		return item.getLinkedItemsCount(
+			ctx,
+			false,
+			KciCoreConstants.Relations.KCIEMAILADDRESS2USERRELATION,
+			"KciEmailAddress",
+			null
+		);
+	}
+	
+	public long getOrderConfirmationEmailsCount(final User item)
+	{
+		return getOrderConfirmationEmailsCount( getSession().getSessionContext(), item );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>User.orderConfirmationEmailAddresses</code> attribute. 
-	 * @param value the orderConfirmationEmailAddresses
+	 * <i>Generated method</i> - Setter of the <code>User.orderConfirmationEmails</code> attribute. 
+	 * @param value the orderConfirmationEmails
 	 */
-	public void setOrderConfirmationEmailAddresses(final SessionContext ctx, final User item, final List<KciEmailAddress> value)
+	public void setOrderConfirmationEmails(final SessionContext ctx, final User item, final Collection<KciEmailAddress> value)
 	{
-		item.setProperty(ctx, KciCoreConstants.Attributes.User.ORDERCONFIRMATIONEMAILADDRESSES,value == null || !value.isEmpty() ? value : null );
+		item.setLinkedItems( 
+			ctx,
+			false,
+			KciCoreConstants.Relations.KCIEMAILADDRESS2USERRELATION,
+			null,
+			value,
+			false,
+			false,
+			Utilities.getMarkModifiedOverride(KCIEMAILADDRESS2USERRELATION_MARKMODIFIED)
+		);
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>User.orderConfirmationEmailAddresses</code> attribute. 
-	 * @param value the orderConfirmationEmailAddresses
+	 * <i>Generated method</i> - Setter of the <code>User.orderConfirmationEmails</code> attribute. 
+	 * @param value the orderConfirmationEmails
 	 */
-	public void setOrderConfirmationEmailAddresses(final User item, final List<KciEmailAddress> value)
+	public void setOrderConfirmationEmails(final User item, final Collection<KciEmailAddress> value)
 	{
-		setOrderConfirmationEmailAddresses( getSession().getSessionContext(), item, value );
+		setOrderConfirmationEmails( getSession().getSessionContext(), item, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Adds <code>value</code> to orderConfirmationEmails. 
+	 * @param value the item to add to orderConfirmationEmails
+	 */
+	public void addToOrderConfirmationEmails(final SessionContext ctx, final User item, final KciEmailAddress value)
+	{
+		item.addLinkedItems( 
+			ctx,
+			false,
+			KciCoreConstants.Relations.KCIEMAILADDRESS2USERRELATION,
+			null,
+			Collections.singletonList(value),
+			false,
+			false,
+			Utilities.getMarkModifiedOverride(KCIEMAILADDRESS2USERRELATION_MARKMODIFIED)
+		);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Adds <code>value</code> to orderConfirmationEmails. 
+	 * @param value the item to add to orderConfirmationEmails
+	 */
+	public void addToOrderConfirmationEmails(final User item, final KciEmailAddress value)
+	{
+		addToOrderConfirmationEmails( getSession().getSessionContext(), item, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Removes <code>value</code> from orderConfirmationEmails. 
+	 * @param value the item to remove from orderConfirmationEmails
+	 */
+	public void removeFromOrderConfirmationEmails(final SessionContext ctx, final User item, final KciEmailAddress value)
+	{
+		item.removeLinkedItems( 
+			ctx,
+			false,
+			KciCoreConstants.Relations.KCIEMAILADDRESS2USERRELATION,
+			null,
+			Collections.singletonList(value),
+			false,
+			false,
+			Utilities.getMarkModifiedOverride(KCIEMAILADDRESS2USERRELATION_MARKMODIFIED)
+		);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Removes <code>value</code> from orderConfirmationEmails. 
+	 * @param value the item to remove from orderConfirmationEmails
+	 */
+	public void removeFromOrderConfirmationEmails(final User item, final KciEmailAddress value)
+	{
+		removeFromOrderConfirmationEmails( getSession().getSessionContext(), item, value );
 	}
 	
 }

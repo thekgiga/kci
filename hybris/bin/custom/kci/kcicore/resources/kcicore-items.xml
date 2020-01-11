@@ -16,8 +16,6 @@
         <collectiontype code="GenderList" elementtype="Gender" autocreate="true" generate="true" type="list"/>
         <collectiontype code="SwatchColorSet" elementtype="SwatchColorEnum" autocreate="true" generate="true"
                         type="set"/>
-        <collectiontype code="KciEmailsList" elementtype="KciEmailAddress" type="list"/>
-
     </collectiontypes>
 
     <enumtypes>
@@ -36,7 +34,15 @@
             <value code="YELLOW"/>
         </enumtype>
     </enumtypes>
-
+    
+    <relations>
+        <relation code="KciEmailAddress2UserRelation" localized="false">
+            <description>Order confirmation email address to User relation.</description>
+            <deployment table="kciEmailAddress2User" typecode="20032"/>
+            <sourceElement type="KciEmailAddress" qualifier="orderConfirmationEmails" cardinality="many"/>
+            <targetElement type="User" qualifier="user" cardinality="many"/>
+        </relation>
+    </relations>
     <itemtypes>
 
         <!-- Add your item definitions here -->
@@ -113,20 +119,10 @@
                 </attributes>
             </itemtype>
 
-            <itemtype code="KciEmailAddress" autocreate="true" generate="true"
-                      jaloclass="org.kloeckner.core.jalo.KciEmailAddress">
+            <itemtype code="KciEmailAddress" jaloclass="org.kloeckner.core.jalo.KciEmailAddress">
                 <deployment table="KciEmailAddr" typecode="11111"/>
                 <attributes>
                     <attribute qualifier="email" type="java.lang.String">
-                        <persistence type="property"/>
-                    </attribute>
-                </attributes>
-            </itemtype>
-
-            <itemtype code="User" generate="false" autocreate="false">
-                <attributes>
-                    <attribute qualifier="orderConfirmationEmailAddresses" type="KciEmailsList">
-                        <modifiers read="true" write="true" search="true"/>
                         <persistence type="property"/>
                     </attribute>
                 </attributes>

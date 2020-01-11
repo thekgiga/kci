@@ -18,9 +18,14 @@
 	</action>
 
 	<action id="sendEmail" bean="sendEmail">
-		<transition name="OK" to="removeSentEmail"/>
+		<transition name="OK" to="sendOrderConfirmationEmail"/>
 		<transition name="NOK" to="failed"/>
 	</action>
+
+    <action id="sendOrderConfirmationEmail" bean="sendOrderConfirmationEmailsAction">
+        <transition name="OK" to="removeSentEmail"/>
+        <transition name="NOK" to="failed"/>
+    </action>
 
 	<action id="removeSentEmail" bean="removeSentEmail">
 		<transition name="OK" to="success"/>

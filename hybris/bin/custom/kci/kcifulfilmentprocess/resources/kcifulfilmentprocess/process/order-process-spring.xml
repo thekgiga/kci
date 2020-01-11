@@ -98,5 +98,11 @@
 		<property name="eventService" ref="eventService"/>
 	</bean>
 
+    <bean id="sendOrderConfirmationEmailsAction"
+          class="org.kloeckner.fulfilmentprocess.actions.order.SendOrderConfirmationEmailsAction"
+          parent="abstractAction">
+        <property name="emailService" ref="emailService"/>
+    </bean>
+
 
 </beans>

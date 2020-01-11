@@ -16,6 +16,7 @@ import de.hybris.platform.core.model.user.CustomerModel;
 import org.apache.commons.lang.StringUtils;
 import org.kloeckner.core.model.KciEmailAddressModel;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -27,11 +28,11 @@ public class KciCustomerPopulator implements Populator<CustomerModel, CustomerDa
     }
 
     protected String getOrderConfirmationEmails(final CustomerModel source) {
-        List<KciEmailAddressModel> orderConfirmationEmailAddresses = source.getOrderConfirmationEmailAddresses();
-        if (Objects.isNull(orderConfirmationEmailAddresses) || orderConfirmationEmailAddresses.isEmpty()) {
+        Collection<KciEmailAddressModel> orderConfirmationEmails = source.getOrderConfirmationEmails();
+        if (Objects.isNull(orderConfirmationEmails) || orderConfirmationEmails.isEmpty()) {
             return StringUtils.EMPTY;
         }
 
-        return orderConfirmationEmailAddresses.stream().map(email -> email.getEmail()).collect(Collectors.joining(","));
+        return orderConfirmationEmails.stream().map(email -> email.getEmail()).collect(Collectors.joining(","));
     }
 }

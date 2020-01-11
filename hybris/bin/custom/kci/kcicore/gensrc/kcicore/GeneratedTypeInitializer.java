@@ -96,6 +96,12 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			false
 		);
 	
+		createRelationType(
+			"KciEmailAddress2UserRelation",
+			"de.hybris.platform.persistence.link.kcicore_KciEmailAddress2UserRelation",
+			false
+		);
+	
 		createEnumerationType(
 			"SwatchColorEnum",
 			null
@@ -111,12 +117,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			"SwatchColorSet",
 			"SwatchColorEnum",
 			CollectionType.SET
-		);
-	
-		createCollectionType(
-			"KciEmailsList",
-			"KciEmailAddress",
-			CollectionType.LIST
 		);
 	
 	}
@@ -144,8 +144,26 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 				single_createattr_KciEmailAddress_email();
 			
-				single_createattr_User_orderConfirmationEmailAddresses();
-			
+		createRelationAttributes(
+			"KciEmailAddress2UserRelation", 
+			false, 
+
+			"orderConfirmationEmails", 
+			"KciEmailAddress", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			false,
+			CollectionType.COLLECTION,
+			"user", 
+			"User", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			false,
+			CollectionType.COLLECTION
+		);
+	
 
 	}
 
@@ -252,23 +270,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 	}
 	
-	public void single_createattr_User_orderConfirmationEmailAddresses() throws JaloBusinessException
-	{
-		
-						Map sqlColumnDefinitions = null;
-					
-				createPropertyAttribute(
-					"User", 
-					"orderConfirmationEmailAddresses",  
-					null,
-					"KciEmailsList",
-					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
-					null,
-					sqlColumnDefinitions
-				);
-			
-	}
-	
 
 
 	/**
@@ -298,6 +299,25 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				"WHITE",
 				"YELLOW"
 			} )
+		);
+	
+		single_setRelAttributeProperties_KciEmailAddress2UserRelation_source();
+	
+		single_setRelAttributeProperties_KciEmailAddress2UserRelation_target();
+	
+		connectRelation(
+			"KciEmailAddress2UserRelation", 
+			false, 
+			"orderConfirmationEmails", 
+			"KciEmailAddress", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			"user", 
+			"User", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			true
 		);
 	
 				{
@@ -377,18 +397,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 			single_setAttributeProperties_KciEmailAddress_email();
 		
-				{
-				Map customPropsMap = new HashMap();
-				
-				changeMetaType(
-					"User",
-					null,
-					customPropsMap
-				);
-				}
-			
-			single_setAttributeProperties_User_orderConfirmationEmailAddresses();
-		
 				setDefaultProperties(
 					"GenderList",
 					true,
@@ -398,13 +406,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 				setDefaultProperties(
 					"SwatchColorSet",
-					true,
-					true,
-					null
-				);
-			
-				setDefaultProperties(
-					"KciEmailsList",
 					true,
 					true,
 					null
@@ -553,28 +554,48 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							);
 						}
 					
-						public void single_setAttributeProperties_User_orderConfirmationEmailAddresses() throws JaloBusinessException
-						{
+								public void single_setRelAttributeProperties_KciEmailAddress2UserRelation_source() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"User", 
+										"orderConfirmationEmails",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
 							
+								public void single_setRelAttributeProperties_KciEmailAddress2UserRelation_target() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"KciEmailAddress", 
+										"user",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
 							
-							
-							Map customPropsMap = new HashMap();
-							
-							setAttributeProperties(
-								"User", 
-								"orderConfirmationEmailAddresses",
-								false, 
-								null,
-								null,
-								null,
-								true,
-								true,
-								null,
-								customPropsMap,
-								null
-							);
-						}
-					
 }
 
 	

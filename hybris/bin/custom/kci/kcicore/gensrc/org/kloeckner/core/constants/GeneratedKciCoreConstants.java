@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at Jan 10, 2020 5:08:22 PM                     ---
+ * --- Generated at Jan 11, 2020 2:11:07 AM                     ---
  * ----------------------------------------------------------------
  */
 package org.kloeckner.core.constants;
@@ -27,7 +27,7 @@ public class GeneratedKciCoreConstants
 	{
 		public static class User
 		{
-			public static final String ORDERCONFIRMATIONEMAILADDRESSES = "orderConfirmationEmailAddresses".intern();
+			public static final String ORDERCONFIRMATIONEMAILS = "orderConfirmationEmails".intern();
 		}
 	}
 	public static class Enumerations
@@ -47,6 +47,10 @@ public class GeneratedKciCoreConstants
 			public static final String WHITE = "WHITE".intern();
 			public static final String YELLOW = "YELLOW".intern();
 		}
+	}
+	public static class Relations
+	{
+		public static final String KCIEMAILADDRESS2USERRELATION = "KciEmailAddress2UserRelation".intern();
 	}
 	
 	protected GeneratedKciCoreConstants()
